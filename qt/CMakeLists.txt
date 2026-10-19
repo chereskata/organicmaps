@@ -80,13 +80,17 @@ target_link_libraries(${PROJECT_NAME}
     location_service
 )
 
+# Place the QML files at the module root to avoid extra qmldir files (QTP0004).
+set_source_files_properties(qml/AboutPopup.qml PROPERTIES QT_RESOURCE_ALIAS AboutPopup.qml)
+set_source_files_properties(qml/main.qml PROPERTIES QT_RESOURCE_ALIAS main.qml)
+
 qt_add_qml_module(${PROJECT_NAME}
-    URI Map
-    # QML_FILES cloud.qml
-    # RESOURCE_PREFIX /qquickwidgetversuswindow_opengl
-    # NO_RESOURCE_TARGET_PATH
-    # DEPENDENCIES QtQuick
-    # SOURCES draw_widget.cpp draw_widget.hpp
+  URI Map
+  # The QTP0001 default prefix, spelled out because Qt 6.4 has no qt_policy().
+  RESOURCE_PREFIX /qt/qml
+  QML_FILES
+    qml/AboutPopup.qml
+    qml/main.qml
 )
 
 if (BUILD_DESIGNER)
